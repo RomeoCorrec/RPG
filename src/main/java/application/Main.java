@@ -1,29 +1,27 @@
 package application;
 
-import Fenetre.FenetreDemarrage;
 import Fenetre.FenetrePrincipale;
 import javafx.application.Application;
-
-// import javafx.scene.media.Media;
-// import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import java.io.IOException;
 
-public class Main extends Application{
+public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws IOException {
 
         try {
-            FenetreDemarrage fd = new FenetreDemarrage();
-            primaryStage = fd.getStage();
+            FenetrePrincipale FP = new FenetrePrincipale();
+            primaryStage = FP.getStage();
             primaryStage.show();
         } catch(Exception e) {e.printStackTrace();}
-    }
+        }
 
 
 
-    public static void main(String[] args) {
+        public static void main (String[]args){
 
-        launch(args);
-    }
+            launch(args);
+        }
+
 }

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static javafx.scene.paint.Color.web;
-import static javafx.scene.text.FontPosture.REGULAR;
 
 
 public class fenetreJeu {
@@ -138,7 +137,7 @@ public class fenetreJeu {
         gridPane2 = new GridPane();
 
         for (int i = 0; i < 12; i++) {
-            Image image = new Image(this.getClass().getResourceAsStream("com/example/demo2/images/herbe.jpg"));
+            Image image = new Image(this.getClass().getResourceAsStream("com/example/application/images/herbe.jpg"));
             ImageView backGroundImage1 = new ImageView(image);
             ImageView backGroundImage2 = new ImageView(image);
             GridPane.setConstraints(backGroundImage1, i % 3, i / 3);
@@ -235,7 +234,7 @@ public class fenetreJeu {
             defence(GB);
             PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
             pauseTransition.setOnFinished(e -> {
-                attaqueEnemy();
+                attaqueEnemy(GB);
                 initGrille(GB);
             });
             pauseTransition.play();
@@ -265,7 +264,9 @@ public class fenetreJeu {
     }
 
     public void Attaque(grilleBouton GB, int x) {
-        textDialogue.setText("");
+
+
+
         if (listeHero.get(heroActuel).getClasse().equals("Warrior")) {
             float pdvInit = listeEnnemy.get(x).getPdVie();
             ((Warrior) listeHero.get(heroActuel)).coupDepee(((Warrior) listeHero.get(heroActuel)), listeEnnemy.get(x));
@@ -274,9 +275,14 @@ public class fenetreJeu {
             Timeline task = setBarEnemy(listeEnnemy.get(x), ((RepPersonnages) HBennemy.getChildren().get(x)).getBarreDeVie());
             task.playFromStart();
             PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+            GB.setVisible(false);
+            if (listeEnnemy.get(x).getPdVie() <= 0) {
+                mortEnemy(GB, x);
+            }
             pauseTransition.setOnFinished(e -> {
                 initGrille(GB);
-                attaqueEnemy();
+                GB.setVisible(true);
+                attaqueEnemy(GB);
             });
             pauseTransition.play();
 
@@ -299,9 +305,14 @@ public class fenetreJeu {
                 Timeline task = setBarEnemy(listeEnnemy.get(x), ((RepPersonnages) HBennemy.getChildren().get(x)).getBarreDeVie());
                 task.playFromStart();
                 PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+                GB.setVisible(false);
+                if (listeEnnemy.get(x).getPdVie() <= 0) {
+                    mortEnemy(GB, x);
+                }
                 pauseTransition.setOnFinished(e -> {
                     initGrille(GB);
-                    attaqueEnemy();
+                    GB.setVisible(true);
+                    attaqueEnemy(GB);
                 });
                 pauseTransition.play();
             });
@@ -315,9 +326,14 @@ public class fenetreJeu {
                 setMessage(listeHero.get(heroActuel).getName() + " affaiblit " + listeEnnemy.get(x).getName());
                 mage.sortDeGlace(mage, listeEnnemy.get(x));
                 PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+                GB.setVisible(false);
+                if (listeEnnemy.get(x).getPdVie() <= 0) {
+                    mortEnemy(GB, x);
+                }
                 pauseTransition.setOnFinished(e -> {
                     initGrille(GB);
-                    attaqueEnemy();
+                    GB.setVisible(true);
+                    attaqueEnemy(GB);
                 });
                 pauseTransition.play();
             });
@@ -334,9 +350,14 @@ public class fenetreJeu {
             Timeline task = setBarEnemy(listeEnnemy.get(x), ((RepPersonnages) HBennemy.getChildren().get(x)).getBarreDeVie());
             task.playFromStart();
             PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+            GB.setVisible(false);
+            if (listeEnnemy.get(x).getPdVie() <= 0) {
+                mortEnemy(GB, x);
+            }
             pauseTransition.setOnFinished(e -> {
                 initGrille(GB);
-                attaqueEnemy();
+                GB.setVisible(true);
+                attaqueEnemy(GB);
             });
             pauseTransition.play();
         }
@@ -348,10 +369,12 @@ public class fenetreJeu {
         setMessage(listeHero.get(heroActuel).getName() + " se défend !");
     }
 
-    private void attaqueEnemy() {
+    private void attaqueEnemy(grilleBouton GB) {
+
         Random R = new Random();
         int choixCible = R.nextInt(listeHero.size());
         Enemy attaquant = listeEnnemy.get(EnemyAttaquant);
+
         float pvInit = listeHero.get(choixCible).getPdVie();
         attaquant.attaquer(attaquant, listeHero.get(choixCible));
         float pvActuel = listeHero.get(choixCible).getPdVie();
@@ -365,7 +388,7 @@ public class fenetreJeu {
         }
 
         if (pvActuel <= 0) {
-            mortHero(choixCible);
+            mortHero(GB, choixCible);
         }
 
     }
@@ -391,9 +414,11 @@ public class fenetreJeu {
                 //task.playFromStart();
                 ((RepPersonnages) HBhero.getChildren().get(finalX)).getBarreDeVie().setProgress(listeHero.get(finalX).getPdVie()/listeHero.get(finalX).getPdVieMax());
                 PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+                GB.setVisible(false);
                 pauseTransition.setOnFinished(e -> {
                     initGrille(GB);
-                    attaqueEnemy();
+                    GB.setVisible(true);
+                    attaqueEnemy(GB);
                 });
                 pauseTransition.play();
             });
@@ -445,7 +470,7 @@ public class fenetreJeu {
             defence(GB);
             PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
             pauseTransition.setOnFinished(e -> {
-                attaqueEnemy();
+                attaqueEnemy(GB);
                 initGrille(GB);
             });
             pauseTransition.play();
@@ -453,20 +478,51 @@ public class fenetreJeu {
         GB.add(defenceBouton, 0, 1, 2, 1);
     }
 
-    private void mortHero(int heroMort) {
+    private void mortHero(grilleBouton GB, int heroMort) {
+        PauseTransition pauseTransition1 = new PauseTransition((Duration.millis(1500)));
         TableauMorts.add(listeHero.get(heroMort));
         String name = listeHero.get(heroMort).getName();
         listeHero.remove(heroMort);
-        HBhero.getChildren().remove(heroMort);
-        setMessage(name + " est mort !");
+        pauseTransition1.setOnFinished(e -> {
+            HBhero.getChildren().remove(heroMort);
+            setMessage(name + " est mort !");
+        });
+        pauseTransition1.play();
 
         if (listeHero.size() == 0) {
-            setMessage("C'est perdu");
-            fenetrePopup gameOver = new fenetrePopup();
-            PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(3000));
             pauseTransition.setOnFinished(e -> {
+                setMessage("C'est perdu");
+            });
+            pauseTransition.play();
+
+            fenetrePopup gameOver = new fenetrePopup();
+            PauseTransition pauseTransition2 = new PauseTransition((Duration.millis(5000)));
+            GB.setVisible(false);
+            pauseTransition2.setOnFinished(e -> {
                 gameOver.creationFenetreGameOver(gameStage, gameOver);
                 gameStage.close();
+            });
+            pauseTransition2.play();
+        }
+
+    }
+
+    private void mortEnemy(grilleBouton GB, int enemyMort) {
+        PauseTransition pauseTransition1 = new PauseTransition((Duration.millis(1500)));
+        TableauMorts.add(listeEnnemy.get(enemyMort));
+        String name = listeEnnemy.get(enemyMort).getName();
+        listeEnnemy.remove(enemyMort);
+        pauseTransition1.setOnFinished(e -> {
+            HBennemy.getChildren().remove(enemyMort);
+            setMessage(name + " est mort !");
+        });
+        pauseTransition1.play();
+
+        if (listeEnnemy.size() == 0) {
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(3000));
+            pauseTransition.setOnFinished(e -> {
+                setMessage("C'est gagné !!");
             });
             pauseTransition.play();
         }
@@ -517,232 +573,6 @@ public class fenetreJeu {
         };
         animation.play();
     }
-
-/*
-    public static void tourDeCombat(ArrayList<Hero> TableauHero, ArrayList<Enemy> TableauEnemy) throws InterruptedException {
-        int NbrTour = 0;
-        while (TableauHero.size() != 0 && TableauEnemy.size() != 0) {
-            ArrayList<Combatant> TableauCombatant = new ArrayList<>();
-            ArrayList<Combatant> TableauMorts = new ArrayList<>();
-            TableauCombatant.addAll(TableauHero);
-            TableauCombatant.addAll(TableauEnemy);
-            int TailleI = TableauCombatant.size();
-            ArrayList<Combatant> TourCombatant = new ArrayList<>();
-            for (int i = 0; i < TailleI; i++) {
-                Random rd = new Random();
-                int R = rd.nextInt(TailleI - i);
-                TourCombatant.add(TableauCombatant.get(R));
-                TableauCombatant.remove(R);
-            }
-
-            NbrTour += 1;
-            System.out.println("TOUR N° " + NbrTour);
-            for (Combatant C : TourCombatant) {
-                if (!TableauMorts.contains(C)) {
-                    Random rd = new Random();
-                    Combatant combatantActuel = C;
-                    System.out.println("C'est le tour de " + combatantActuel.getName());
-                    Thread.sleep(1000);
-                    if (combatantActuel instanceof Enemy) {
-                        int NJ = rd.nextInt(TableauHero.size());
-                        ((Enemy) combatantActuel).attaquer(((Enemy) combatantActuel), TableauHero.get(NJ));
-                        Thread.sleep(1000);
-                        if (TableauHero.get(NJ).getPdVie() <= 0) {
-                            System.out.println(TableauHero.get(NJ).getName() + " est mort");
-                            TableauMorts.add(TableauHero.get(NJ));
-                            TableauHero.remove(NJ);
-                            if (TableauHero.isEmpty()) {
-                                System.out.println("Tous vos héros sont morts");
-                                System.out.println("Vous avez échoué...");
-                                break;
-                            }
-                        }
-                    } else if (combatantActuel instanceof Hero) {
-                        Hero heroActuel = ((Hero) combatantActuel);
-                        if (heroActuel.getClasse().equals("Warrior")) {
-                            // Warrior warrior = (Warrior) ((Hero) combatantActuel);
-                            // warrior.setName(heroActuel.getName());
-                            System.out.println("Que voulez vous faire " + heroActuel.getName() + " ?");
-                            Thread.sleep(1000);
-                            System.out.println("1. Attaquer");
-                            System.out.println("2. Se défendre");
-                            System.out.println("3. Utiliser un Item");
-                            int choix = System.out.println(();
-
-                            switch (choix) {
-                                case 1:
-                                    System.out.println("quel enemie voulez-vous attaquer ?");
-                                    for (Enemy e : TableauEnemy) {
-                                        System.out.println(e.getName());
-                                    }
-                                    int choixE = System.out.println(();
-                                    ((Warrior) heroActuel).coupDepee(((Warrior) heroActuel), TableauEnemy.get(choixE - 1));
-                                    if (TableauEnemy.get(choixE - 1).getPdVie() <= 0) {
-                                        System.out.println(TableauEnemy.get(choixE - 1).getName() + " est mort");
-                                        TableauEnemy.remove(choixE - 1);
-                                    }
-                                    break;
-
-                                case 2:
-                                    heroActuel.setDefendre(true);
-                                    System.out.println(heroActuel.getName() + " se défend !");
-                                    break;
-
-                                case 3:
-                                    System.out.println("Quel item voulez vous utiliser ?");
-                                    heroActuel.showInventory();
-                                    String item = System.out.println(te();
-                                    heroActuel.utiliserUnItem(heroActuel, item);
-                                    break;
-                            }
-
-                        } else if (heroActuel.getClasse().equals("Hunter")) {
-                            System.out.println("Que voulez vous faire ?");
-                            Thread.sleep(1000);
-                            System.out.println("1. Attaquer");
-                            System.out.println("3. Se défendre");
-                            System.out.println("2. Utiliser un Item");
-                            int choix = System.out.println(();
-
-                            switch (choix) {
-                                case 1:
-                                    System.out.println("quel enemie voulez-vous attaquer ?");
-                                    for (Enemy e : TableauEnemy) {
-                                        System.out.println(e.getName());
-                                    }
-                                    int choixE = System.out.println(();
-                                    ((Hunter) heroActuel).tireAlArc(TableauEnemy.get(choixE - 1), ((Hunter) heroActuel));
-                                    if (TableauEnemy.get(choixE - 1).getPdVie() <= 0) {
-                                        System.out.println(TableauEnemy.get(choixE - 1).getName() + " est mort");
-                                        TableauEnemy.remove(choixE - 1);
-                                    }
-                                    break;
-
-                                case 2:
-                                    heroActuel.setDefendre(true);
-                                    System.out.println(heroActuel.getName() + " se défend !");
-                                    break;
-
-                                case 3:
-                                    System.out.println("Quel item voulez vous utiliser ?");
-                                    heroActuel.showInventory();
-                                    System.out.println(te();
-                                    String item = System.out.println(te();
-                                    heroActuel.utiliserUnItem(heroActuel, item);
-                                    break;
-
-
-                            }
-                        } else if (heroActuel.getClasse() == "Mage") {
-                            System.out.println("Que voulez vous faire " + heroActuel.getName() + " ?");
-                            Thread.sleep(1000);
-                            System.out.println("1. Attaquer");
-                            System.out.println("3. Se défendre");
-                            System.out.println("2. Utiliser un Item");
-                            int choix = System.out.println(();
-
-                            switch (choix) {
-                                case 1:
-                                    System.out.println("Quel sort voulez-vous utiliser ?");
-                                    Thread.sleep(1000);
-                                    System.out.println("1. Sort de feu");
-                                    System.out.println("2. Sort de glace");
-                                    int choixS = System.out.println(();
-                                    System.out.println("quel enemie voulez-vous attaquer ?");
-                                    for (Enemy e : TableauEnemy) {
-                                        System.out.println(e.getName());
-                                    }
-                                    int choixE = System.out.println(();
-                                    switch (choixS) {
-                                        case 1:
-                                            Mage.sortDeFeu(heroActuel, TableauEnemy.get(choixE - 1));
-                                            if (TableauEnemy.get(choixE - 1).getPdVie() <= 0) {
-                                                System.out.println(TableauEnemy.get(choixE - 1).getName() + " est mort");
-                                                TableauEnemy.remove(choixE - 1);
-
-                                            }
-                                            break;
-                                        case 2:
-                                            ((Mage) heroActuel).sortDeGlace(((Mage) heroActuel), TableauEnemy.get(choixE - 1));
-                                            break;
-                                    }
-                                    break;
-
-                                case 2:
-                                    heroActuel.setDefendre(true);
-                                    System.out.println(heroActuel.getName() + " se défend !");
-                                    break;
-
-                                case 3:
-                                    System.out.println("Quel item voulez vous utiliser ?");
-                                    heroActuel.showInventory();
-                                    System.out.println(te();
-                                    String item = System.out.println(te();
-                                    heroActuel.utiliserUnItem(heroActuel, item);
-                                    break;
-
-
-                            }
-                        } else if (heroActuel.getClasse().equals("healer")) {
-                            System.out.println("Que voulez vous faire " + heroActuel.getName() + " ?");
-                            // Thread.sleep(1000);
-                            System.out.println("1. Soigner");
-                            System.out.println("3. Se défendre");
-                            System.out.println("2. Utiliser un Item");
-                            int choix = System.out.println(();
-
-                            switch (choix) {
-                                case 1:
-                                    System.out.println("Quel sort voulez-vous utiliser ?");
-                                    Thread.sleep(1000);
-                                    System.out.println("1. Soin monocible");
-                                    System.out.println("2. Soin de zone");
-                                    int choixS = System.out.println(();
-                                    switch (choixS) {
-                                        case 1:
-                                            System.out.println("Qui voulez-vous soigner ?");
-                                            for (Hero h : TableauHero) {
-                                                System.out.println((TableauHero.indexOf(h) + 1) + ". ");
-                                                System.out.println(h.getName());
-                                            }
-                                            int choixH = System.out.println(();
-                                            ((Healer) heroActuel).soin(((Healer) heroActuel), TableauHero.get(choixH - 1));
-                                            break;
-                                        case 2:
-                                            ((Healer) heroActuel).soinDeZone(((Healer) heroActuel), TableauHero);
-                                            break;
-                                    }
-                                    break;
-
-                                case 2:
-                                    heroActuel.setDefendre(true);
-                                    System.out.println(heroActuel.getName() + " se défend !");
-                                    break;
-
-                                case 3:
-                                    System.out.println("Quel item voulez vous utiliser ?");
-                                    heroActuel.showInventory();
-                                    String item = System.out.println(te();
-                                    heroActuel.utiliserUnItem(heroActuel, item);
-                                    break;
-
-
-                            }
-                        }
-                        if (TableauEnemy.isEmpty()) {
-                            System.out.println("Vous avez vaincu tous les ennemis de ce niveau");
-                            break;
-                        }
-                    }
-                    System.out.println("\n");
-                    System.out.println("\n");
-                    System.out.println("\n");
-
-                }
-            }
-        }
-    }
-*/
 
     public ArrayList<Enemy> getListeEnnemy() {
         return listeEnnemy;
