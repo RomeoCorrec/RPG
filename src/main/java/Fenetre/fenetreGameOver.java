@@ -7,8 +7,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
-public class fenetrePopup {
-    private fenetrePopup FPP;
+public class fenetreGameOver {
+    private fenetreGameOver FPP;
     private AnchorPane popAnchor;
     private Stage popStage;
     private Scene popScene;
@@ -20,7 +20,7 @@ public class fenetrePopup {
     private static final int G_WIDTH = 600;
     private static final int G_HEIGHT = 400;
 
-    public fenetrePopup() {
+    public fenetreGameOver() {
         popAnchor = new AnchorPane();
         popScene = new Scene(popAnchor, G_WIDTH, G_HEIGHT);
         popStage = new Stage();
@@ -54,7 +54,7 @@ public class fenetrePopup {
         popAnchor.setBackground(new Background(background));
     }
 
-    public void creationFenetreGameOver(Stage menuStage, fenetrePopup Popup) {
+    public void creationFenetreGameOver(Stage menuStage, fenetreGameOver Popup) {
         this.menuStage = menuStage;
         this.FPP = Popup;
         //createBackgroud();

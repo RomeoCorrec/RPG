@@ -54,7 +54,7 @@ public class Healer extends SpellCaster{
         System.out.println("Votre épée inflige maintenant " + caducee.getDegats() + " point de dégats");
     }
     public Healer(String name) {
-        super(name, 130, 150, "Healer", 30, 20, 10, 130);
+        super(name, 130, 150, "Healer", 10, 20, 10, 130);
     }
 
 

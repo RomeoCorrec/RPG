@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Mage extends SpellCaster {
 
-    static Weapon baguette = new Weapon("baguette", 0, 100);
+    static Weapon baguette = new Weapon("baguette", 0, 50);
 
     public static void sortDeFeu(Mage hero, Enemy enemy) {
         if (hero.getPdMana() > 10) {

@@ -2,16 +2,20 @@ package ElementsJeu;
 
 import java.util.Random;
 
+public class BOSS extends Enemy{
 
-public class Enemy extends Combatant{
+    Weapon Machette = new Weapon("Machette", 70, 0);
+    private float PdVie;
+    private int PdMana;
+    private int armure;
+    private int resistanceMagic;
+    private String name;
 
-    Weapon massue = new Weapon("massue", 50, 0);
-    private float pdvMax;
-
+    @Override
     public void attaquer (Enemy enemy, Hero hero) {
         Random rd = new Random();
         int R = rd.nextInt(11);
-        float degatsInfliges = massue.getDegats() - hero.getArmure();
+        float degatsInfliges = Machette.getDegats() - hero.getArmure();
         if (R >= 9) {
             System.out.println("Coup critique !");
             degatsInfliges *= 2;
@@ -24,13 +28,16 @@ public class Enemy extends Combatant{
         hero.setPdVie(hero.getPdVie() - degatsInfliges);
         System.out.println(hero.getName() + " a " + hero.getPdVie() + " points de vie");
     }
-    public Enemy(String name) {
-        super(name, (int) (Math.random() * 51) + 100, 0, (int) (Math.random() * 10) + 20, (int) (Math.random() * 10) + 20,0);
-        this.pdvMax = this.getPdVie();}
 
-
-    public float getPdvMax() {
-        return pdvMax;
+    public BOSS(String name) {
+        super(name);
+        Random R = new Random();
+        this.PdVie = R.nextInt(100) + 250;
+        this.armure = R.nextInt(10) + 30;
+        this.resistanceMagic = R.nextInt(10) + 30;
+        int degats = R.nextInt(10) + 60;
+        this.Machette.setDegats(degats);
     }
-}
 
+
+}

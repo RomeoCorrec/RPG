@@ -29,15 +29,9 @@ public abstract class Hero extends Combatant {
 
     // Méthodes
 
-    public void utiliserUnItem(Hero hero, String item) {
-        Scanner scanner = new Scanner(System.in);
+    public void utiliserUnItem(Hero hero, String item, int portions) {
         if (item.equals("food")) {
             System.out.println("Mangeons");
-            int portions;
-            do {
-                System.out.println("combien de portions voulez vous manger ?");
-                portions = scanner.nextInt();
-            } while (portions > hero.getQuantiteNouriture());
             for (int i = 0; i < portions; i++) {
                 int j = 0;
                 while (Inventaire.get(j).getName() != "food") {
@@ -52,11 +46,6 @@ public abstract class Hero extends Combatant {
             }
         else if (item.equals("potion")) {
             System.out.println("Buvons");
-            int portions;
-            do {
-                System.out.println("combien de portions voulez vous boire ?");
-                portions = scanner.nextInt();
-            } while (portions > hero.getQuantitePotion());
             for (int i = 0; i < portions; i++) {
                 int j = 0;
                 while (Inventaire.get(j).getName() != "potion") {
@@ -83,6 +72,7 @@ public abstract class Hero extends Combatant {
             this.QuantiteNouriture = 5;
             this.QuantitePotion = 3;
             this.efficaciteSoin = 1;
+            this.pdVieMax = pdVieMax;
 
         }
 

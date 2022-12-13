@@ -77,7 +77,7 @@ public class FenetrePrincipale {
         grilleJoueur.setEffect(dropShadow);
 
         for(int i=0; i<4; i++) {
-            listeJoueurs.add(new TextField(i<2?"Héro"+(i+1):""));
+            listeJoueurs.add(new TextField(i<1?"Héro"+(i+1):""));
             //listeJoueurs.get(i).setEffect(dropShadow);
             listeJoueurs.get(i).setPromptText("Nom du héro "+(i+1));
             listeJoueurs.get(i).setPrefWidth(250);
@@ -102,7 +102,6 @@ public class FenetrePrincipale {
 
             class3.setOnAction(event -> {
                 boutonClasse.get(finalI).setText(class3.getText());
-
 
             });
 
