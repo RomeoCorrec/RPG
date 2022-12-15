@@ -15,8 +15,8 @@ public class Food extends Consomable{
 
         else {
             float pdvRecup = portions * 30;
-            if (hero.getPdVie() + pdvRecup > hero.getPdVieMax()) {
-                hero.setPdVie(hero.getPdVieMax());
+            if (hero.getPdVie() + pdvRecup > hero.getPdvMax()) {
+                hero.setPdVie(hero.getPdvMax());
             } else {
                 hero.setPdVie(hero.getPdVie() + pdvRecup);
             }

@@ -3,7 +3,7 @@ package ElementsJeu;
 import java.util.Random;
 
 public class Warrior extends Hero {
-    static Weapon sword = new Weapon("sword", 40, 0);
+    static Weapon sword = new Weapon("sword", 60, 0);
 
     public Warrior(String name) {
         super(name, 200, 0, "Warrior", 30, 30, 50, 200);

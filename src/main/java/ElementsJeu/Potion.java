@@ -10,8 +10,8 @@ public class Potion extends Consomable{
 
     public static void consommerPotion(int quantite, Hero hero) {
         float pdvRecup = hero.getEfficaciteSoin() * quantite * 20;
-        if (hero.getPdVie() + pdvRecup > hero.getPdVieMax()) {
-            hero.setPdVie(hero.getPdVieMax());
+        if (hero.getPdVie() + pdvRecup > hero.getPdvMax()) {
+            hero.setPdVie(hero.getPdvMax());
         } else {
             hero.setPdVie(hero.getPdVie() + pdvRecup);
         }

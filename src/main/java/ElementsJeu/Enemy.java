@@ -28,6 +28,10 @@ public class Enemy extends Combatant{
         super(name, (int) (Math.random() * 51) + 100, 0, (int) (Math.random() * 10) + 20, (int) (Math.random() * 10) + 20,0);
         this.pdvMax = this.getPdVie();}
 
+    public Enemy(String name, int pdVie) {
+        super(name, pdVie, 0, (int) (Math.random() * 10) + 20, (int) (Math.random() * 10) + 20,0);
+        this.pdvMax = this.getPdVie();}
+
 
     public float getPdvMax() {
         return pdvMax;

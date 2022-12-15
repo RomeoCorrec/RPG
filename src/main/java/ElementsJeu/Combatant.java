@@ -40,7 +40,7 @@ public abstract class Combatant {
     }
 
     public float getPdVie() {
-        return PdVie;
+        return this.PdVie;
     }
 
     public int getPdMana() {
@@ -64,7 +64,7 @@ public abstract class Combatant {
     }
 
     public void setPdVie(float pdVie) {
-        PdVie = pdVie;
+        this.PdVie = pdVie;
     }
 
     public void setPdMana(int pdMana) {

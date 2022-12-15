@@ -3,7 +3,7 @@ package ElementsJeu;
 import java.util.Random;
 
 public class Hunter extends Hero{
-    static Weapon arc = new Weapon("arc", 40, 0);
+    static Weapon arc = new Weapon("arc", 70, 0);
     private int nbrFleche = 20;
 
     public Hunter(String name) {

@@ -15,10 +15,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jeudeplateau.RepPersonnages;
+import Représentations.RepPersonnages;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import static javafx.scene.paint.Color.web;
@@ -51,6 +50,8 @@ public class fenetreJeu {
     private ArrayList<Combatant> tableauCombatants;
     ArrayList<Combatant> TableauMorts;
 
+    private boolean aAffronterUnBoss = false;
+
     private HBox HBhero;
     private HBox HBennemy;
     private HBox HBsubscene;
@@ -60,6 +61,7 @@ public class fenetreJeu {
     private final static String imageHealer = "/images/Healer.png";
     private final static String imageHunter = "/images/Archer.png";
     private final static String imageEnemy = "/images/Enemy.png";
+    private final static String imageBoss = "/images/BOSS.png";
     private final static String imageFondDialogue = "/images/FontTexteParchemin (2).jpg";
 
 
@@ -234,6 +236,7 @@ public class fenetreJeu {
 
             y++;
         }
+        intiBoutonRetour(GB , y);
     }
 
     public void Attaque(grilleBouton GB, int x) {
@@ -245,6 +248,9 @@ public class fenetreJeu {
             }
         }
 
+        while (HBhero.getChildren().size() > listeHero.size()) {
+            heroActuel--;
+        }
 
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(3000));
 
@@ -264,8 +270,9 @@ public class fenetreJeu {
                 pauseTransition1.setOnFinished(e -> {
                     attaqueEnemy(GB);
                     pauseTransition.setOnFinished(event -> {
-                        ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.BLACK);
                         initGrille(GB);
+                        int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                        ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
                         GB.setVisible(true);
                     });
                     pauseTransition.play();
@@ -289,7 +296,7 @@ public class fenetreJeu {
                     setMessage(listeHero.get(heroActuel).getName() + " lance une boule de feu sur " + listeEnnemy.get(x).getName() + "\n" + " et lui inflige " + (pdvInit - pdvActuel)+ " points de dégats");
                     Timeline task = setBarEnemy(listeEnnemy.get(x), ((RepPersonnages) HBennemy.getChildren().get(x)).getBarreDeVie());
                     task.playFromStart();
-                    PauseTransition pauseTransition2 = new PauseTransition((Duration.millis(3000)));
+                    PauseTransition pauseTransition2 = new PauseTransition((Duration.millis(4500)));
                     GB.setVisible(false);
                     if (listeEnnemy.get(x).getPdVie() <= 0) {
                         mortEnemy(GB, x);
@@ -297,8 +304,9 @@ public class fenetreJeu {
                     pauseTransition2.setOnFinished(e -> {
                         attaqueEnemy(GB);
                         pauseTransition.setOnFinished(event1 -> {
-                            ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.BLACK);
                             initGrille(GB);
+                            int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                            ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
                             GB.setVisible(true);
                         });
                         pauseTransition.play();
@@ -312,7 +320,7 @@ public class fenetreJeu {
                 sortDeGlaceButton.setPrefWidth(200);
                 sortDeGlaceButton.setOnAction(event -> {
 
-                    setMessage(listeHero.get(heroActuel).getName() + " affaiblit " + listeEnnemy.get(x).getName());
+                    setMessage(listeHero.get(heroActuel-1).getName() + " affaiblit " + listeEnnemy.get(x).getName());
                     mage.sortDeGlace(mage, listeEnnemy.get(x));
                     PauseTransition pauseTransition3 = new PauseTransition((Duration.millis(3000)));
                     GB.setVisible(false);
@@ -322,8 +330,10 @@ public class fenetreJeu {
                     pauseTransition3.setOnFinished(e -> {
                         attaqueEnemy(GB);
                         pauseTransition.setOnFinished(event2 -> {
-                            ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.BLACK);
                             initGrille(GB);
+                            int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                            ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
+
                             GB.setVisible(true);
                         });
                         pauseTransition.play();                    });
@@ -332,6 +342,8 @@ public class fenetreJeu {
 
                 GB.add(sortDeFeuButton, 0, 0, 2, 1);
                 GB.add(sortDeGlaceButton, 0, 1, 2, 1);
+                intiBoutonRetour(GB , 3);
+
 
             } else if (listeHero.get(heroActuel).getClasse().equals("Hunter")) {
 
@@ -350,8 +362,9 @@ public class fenetreJeu {
                 pauseTransition4.setOnFinished(e -> {
                     attaqueEnemy(GB);
                     pauseTransition.setOnFinished(event -> {
-                        ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.BLACK);
                         initGrille(GB);
+                        int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                        ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
                         GB.setVisible(true);
                     });
                     pauseTransition.play();
@@ -364,6 +377,7 @@ public class fenetreJeu {
     private void defence(grilleBouton GB) {
         listeHero.get(heroActuel).setDefendre(true);
         setMessage(listeHero.get(heroActuel).getName() + " se défend !");
+
     }
 
     private void attaqueEnemy(grilleBouton GB) {
@@ -398,6 +412,18 @@ public class fenetreJeu {
 
     }
 
+    private void intiBoutonRetour(grilleBouton GB, int y) {
+        Button retourButton = new Button("Retour");
+        GB.add(retourButton, 0, y);
+        retourButton.setOnAction(event -> {
+            heroActuel--;
+            if(heroActuel < -1) {
+                heroActuel = -1;
+            }
+            initGrille(GB);
+        });
+    }
+
 
     private void soinSolo(grilleBouton GB) {
         GB.getChildren().clear();
@@ -418,21 +444,55 @@ public class fenetreJeu {
                 Timeline task = setBarHero(listeHero.get(finalX), ((RepPersonnages) HBhero.getChildren().get(finalX)).getBarreDeVie());
                 task.playFromStart();
                 // ((RepPersonnages) HBhero.getChildren().get(finalX)).getBarreDeVie().setProgress(listeHero.get(finalX).getPdVie()/listeHero.get(finalX).getPdVieMax());
+                PauseTransition pauseTransition2 = new PauseTransition((Duration.millis(3000)));
                 PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
                 GB.setVisible(false);
-                pauseTransition.setOnFinished(e -> {
-                    ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.BLACK);
-                    initGrille(GB);
-                    GB.setVisible(true);
+                pauseTransition2.setOnFinished(e -> {
                     attaqueEnemy(GB);
+                    pauseTransition.setOnFinished(event1 -> {
+                        initGrille(GB);
+                        int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                        ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
+                        GB.setVisible(true);
+                    });
+                    pauseTransition.play();
                 });
-                pauseTransition.play();
+                pauseTransition2.play();
             });
 
             GB.add(button, x, y);
 
             y++;
         }
+        intiBoutonRetour(GB, y+1);
+    }
+
+    private void soinZone(grilleBouton GB) {
+
+        Healer healer = (Healer) listeHero.get(heroActuel);
+        setMessage(healer.getName() + " soigne en zone");
+        healer.soinDeZone(healer, listeHero);
+
+        for (int l = 0; l < HBhero.getChildren().size(); l++) {
+            Timeline task = setBarHero(listeHero.get(l), ((RepPersonnages) HBhero.getChildren().get(l)).getBarreDeVie());
+            task.playFromStart();
+        }
+
+        PauseTransition pauseTransition2 = new PauseTransition((Duration.millis(3000)));
+        PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
+        GB.setVisible(false);
+        pauseTransition2.setOnFinished(e -> {
+            attaqueEnemy(GB);
+            pauseTransition.setOnFinished(event1 -> {
+                initGrille(GB);
+                int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
+                GB.setVisible(true);
+            });
+            pauseTransition.play();
+        });
+        pauseTransition2.play();
+
     }
 
     private void initGrille(grilleBouton GB) {
@@ -442,9 +502,9 @@ public class fenetreJeu {
             heroActuel = 0;
         }
 
-        ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.RED);
-
+        int i = 1;
         setMessage("Cest le tour de " + listeHero.get(heroActuel).getName());
+        ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getNomCombatant().setTextFill(Color.RED);
 
         GB.getChildren().clear();
         if (!(listeHero.get(heroActuel) instanceof Healer)) {
@@ -464,22 +524,39 @@ public class fenetreJeu {
             soinButton.setOnAction(event -> {
                 soinSolo(GB);
             });
+
+            Button soinZoneButton = new Button("Soigner en zone");
+            soinZoneButton.setPrefWidth(200);
+            soinZoneButton.setPrefHeight(40);
+            soinZoneButton.setOnAction(event -> {
+                soinZone(GB);
+            });
             GB.add(soinButton, 0, 0, 2, 1);
+            GB.add(soinZoneButton, 0, 1, 2, 1);
+            i++;
         }
 
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(3000));
+        PauseTransition pauseTransition2 = new PauseTransition(Duration.millis(3000));
         Button defenceBouton = new Button("Se défendre");
         defenceBouton.setPrefWidth(200);
         defenceBouton.setPrefHeight(40);
         defenceBouton.setOnAction(event -> {
             defence(GB);
-            PauseTransition pauseTransition = new PauseTransition((Duration.millis(3000)));
-            pauseTransition.setOnFinished(e -> {
+            GB.setVisible(false);
+            pauseTransition2.setOnFinished(e -> {
                 attaqueEnemy(GB);
-                initGrille(GB);
+                pauseTransition.setOnFinished(event1 -> {
+                    initGrille(GB);
+                    int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                    ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
+                    GB.setVisible(true);
+                });
+                pauseTransition.play();
             });
-            pauseTransition.play();
+            pauseTransition2.play();
         });
-        GB.add(defenceBouton, 0, 1, 2, 1);
+        GB.add(defenceBouton, 0, i, 2, 1);
 
         Button itemsButton = new Button("Utiliser un item");
         itemsButton.setPrefWidth(200);
@@ -487,7 +564,8 @@ public class fenetreJeu {
         itemsButton.setOnAction(event -> {
             choixItem(GB);
         });
-        GB.add(itemsButton, 0, 2, 2, 1);
+        GB.add(itemsButton, 0, i+1, 2, 1);
+
     }
 
     private void choixItem(grilleBouton GB) {
@@ -526,7 +604,7 @@ public class fenetreJeu {
             nbrPortions.getItems().add(nbr);
             int I = i;
             nbr.setOnAction(event -> {
-                nbrPotions.setText(nbr.getText());
+                nbrPortions.setText(nbr.getText());
             });
         }
 
@@ -535,8 +613,8 @@ public class fenetreJeu {
                 int quantite = Integer.parseInt(nbrPotions.getText());
 
                 float pdvRecup = listeHero.get(heroActuel).getEfficaciteSoin() * quantite * 20;
-                if (listeHero.get(heroActuel).getPdVie() + pdvRecup > listeHero.get(heroActuel).getPdVieMax()) {
-                    listeHero.get(heroActuel).setPdVie(listeHero.get(heroActuel).getPdVieMax());
+                if (listeHero.get(heroActuel).getPdVie() + pdvRecup > listeHero.get(heroActuel).getPdvMax()) {
+                    listeHero.get(heroActuel).setPdVie(listeHero.get(heroActuel).getPdvMax());
                 } else {
                     listeHero.get(heroActuel).setPdVie(listeHero.get(heroActuel).getPdVie() + pdvRecup);
                 }
@@ -557,6 +635,8 @@ public class fenetreJeu {
                     attaqueEnemy(GB);
                     pauseTransition1.setOnFinished(event1 -> {
                         initGrille(GB);
+                        int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                        ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
                         GB.setVisible(true);
                     });
                     pauseTransition1.play();
@@ -576,12 +656,12 @@ public class fenetreJeu {
 
 
         choixNouriture.setOnAction(event -> {
-            if (!nbrPotions.getText().equals("Quantité")) {
-                int quantite = Integer.parseInt(nbrPotions.getText());
+            if (!nbrPortions.getText().equals("Quantité")) {
+                int quantite = Integer.parseInt(nbrPortions.getText());
 
                 float pdvRecup = listeHero.get(heroActuel).getEfficaciteSoin() * quantite * 10;
-                if (listeHero.get(heroActuel).getPdVie() + pdvRecup > listeHero.get(heroActuel).getPdVieMax()) {
-                    listeHero.get(heroActuel).setPdVie(listeHero.get(heroActuel).getPdVieMax());
+                if (listeHero.get(heroActuel).getPdVie() + pdvRecup > listeHero.get(heroActuel).getPdvMax()) {
+                    listeHero.get(heroActuel).setPdVie(listeHero.get(heroActuel).getPdvMax());
                 } else {
                     listeHero.get(heroActuel).setPdVie(listeHero.get(heroActuel).getPdVie() + pdvRecup);
                 }
@@ -593,7 +673,7 @@ public class fenetreJeu {
                 }
                 */
 
-                setMessage("Vous mangez " + quantite + " de portions et récupérez " + pdvRecup + " points de vie");
+                setMessage("Vous mangez " + quantite + " portions et récupérez " + pdvRecup + " points de vie");
                 Timeline task = setBarHero(listeHero.get(heroActuel), ((RepPersonnages) HBhero.getChildren().get(heroActuel)).getBarreDeVie());
                 task.playFromStart();
 
@@ -604,6 +684,8 @@ public class fenetreJeu {
                     attaqueEnemy(GB);
                     pauseTransition1.setOnFinished(event1 -> {
                         initGrille(GB);
+                        int heroPrecedent = (heroActuel - 1) == -1 ? listeHero.size() -1 :heroActuel-1;
+                        ((RepPersonnages) HBhero.getChildren().get(heroPrecedent)).getNomCombatant().setTextFill(Color.BLACK);
                         GB.setVisible(true);
                     });
                     pauseTransition1.play();
@@ -625,6 +707,7 @@ public class fenetreJeu {
         GB.add(choixNouriture, 0, 1, 2, 1);
         GB.add(nbrPotions, 2, 0, 2, 1);
         GB.add(nbrPortions, 2, 1, 2, 1);
+        intiBoutonRetour(GB, 2);
     }
 
     private void mortHero(grilleBouton GB, int heroMort) {
@@ -696,16 +779,38 @@ public class fenetreJeu {
             GB.getChildren().clear();
             for (int i = 0; i < nbrHeroInit; i++) {
                 listeEnnemy.add(new Enemy("enemy " + i));
-                HBennemy.getChildren().add(new RepPersonnages(imageEnemy, listeHero.get(i)));
+                HBennemy.getChildren().add(new RepPersonnages(imageEnemy, listeEnnemy.get(i)));
                 Random rd = new Random();
                 heroActuel = rd.nextInt(listeHero.size());
                 EnemyAttaquant = rd.nextInt(listeEnnemy.size());
                 TableauMorts = new ArrayList<>();
             }
         }
+        else if (aAffronterUnBoss) {
+            setMessage("Vous avez vaincu le boss");
+            fenetreVictoire fenetreVictoire = new fenetreVictoire(HBhero);
+            for (int l = 0; l < listeHero.size(); l++) {
+                ((RepPersonnages) HBhero.getChildren().get(l)).getNomCombatant().setTextFill(Color.web("#269CBF"));
+            }
+            PauseTransition pauseTransition2 = new PauseTransition((Duration.millis(1000)));
+            GB.setVisible(false);
+            pauseTransition2.setOnFinished(e -> {
+                fenetreVictoire.creationFenetreVictoire(gameStage, fenetreVictoire);
+                gameStage.close();
+            });
+            pauseTransition2.play();
+
+        }
         else {
             setMessage("Vous rencontrez un BOSS !!");
-            BOSS boss = new BOSS("BOSS");
+            aAffronterUnBoss = true;
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(1000));
+            pauseTransition.setOnFinished(event -> {
+                BOSS boss = new BOSS("BOSS");
+                listeEnnemy.add(boss);
+                HBennemy.getChildren().add(new RepPersonnages(imageBoss, boss));
+            });
+            pauseTransition.play();
         }
     }
 

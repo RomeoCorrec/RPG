@@ -2,18 +2,12 @@ package ElementsJeu;
 
 import Fenetre.fenetreJeu;
 import Fenetre.grilleBouton;
-import Fenetre.grilleMBoutons;
 import javafx.animation.*;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import jeudeplateau.RepPersonnages;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ConcurrentMap;
 
 public class Combat {
 

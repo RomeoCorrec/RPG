@@ -10,7 +10,7 @@ public class Healer extends SpellCaster{
 
 
     public void soin(Healer heroH, Hero hero) {
-        float degatsSoigner = (caducee.getDegatsMagique() + hero.getForce()) * hero.getEfficaciteSoin();
+        float degatsSoigner = (caducee.getDegatsMagique() + heroH.getForce()) * hero.getEfficaciteSoin();
         System.out.println("Je soigne " + hero.getName());
         Random rd = new Random();
         int R = rd.nextInt(11);
@@ -18,13 +18,13 @@ public class Healer extends SpellCaster{
             System.out.println("Coup critique !");
             degatsSoigner *= 2;
         }
-        if (hero.getPdVie() + degatsSoigner > hero.getPdVieMax()) {
-            hero.setPdVie(hero.getPdVieMax());
+        if (hero.getPdVie() + degatsSoigner > hero.getPdvMax()) {
+            hero.setPdVie(hero.getPdvMax());
         } else {
             hero.setPdVie(hero.getPdVie() + degatsSoigner);
         }
+        System.out.println(degatsSoigner);
         System.out.println(hero.getName() + "a " + hero.getPdVie() + " pv");
-        hero.setPdVie(hero.getPdVie() + degatsSoigner);
         heroH.setPdMana(heroH.getPdMana() - 10);
     }
 
@@ -39,8 +39,8 @@ public class Healer extends SpellCaster{
                 degatsSoigne *= 2;
             }
             System.out.println(heroH.getName() + " soigne " + degatsSoigne + " points de vie a " + hero.getName());
-            if (hero.getPdVie() + degatsSoigne > hero.getPdVieMax()) {
-                hero.setPdVie(hero.getPdVieMax());
+            if (hero.getPdVie() + degatsSoigne > hero.getPdvMax()) {
+                hero.setPdVie(hero.getPdvMax());
             } else {
                 hero.setPdVie(hero.getPdVie() + degatsSoigne);
             }
