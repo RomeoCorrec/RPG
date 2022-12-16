@@ -108,7 +108,7 @@ public class fenetreJeu {
         AnchorPane.setLeftAnchor(HBsubscene, 650.);
 
         HBsubscene.setAlignment(Pos.CENTER);
-        HBsubscene.setBackground(new Background(new BackgroundFill(web("#11F1E0"), new CornerRadii(0), new Insets(0))));
+        //HBsubscene.setBackground(new Background(new BackgroundFill(web("#11F1E0"), new CornerRadii(0), new Insets(0))));
         gamePane.getChildren().add(HBsubscene);
         //subSceneAction = new subSceneAction();
         //subSceneAction.setLayoutX(gamePane.getWidth()- 450);
@@ -775,7 +775,7 @@ public class fenetreJeu {
     }
 
     private void rebootCombat(int b, grilleBouton GB) {
-        if (nbrCombat < 5) {
+        if (nbrCombat < 2) {
             GB.getChildren().clear();
             for (int i = 0; i < nbrHeroInit; i++) {
                 listeEnnemy.add(new Enemy("enemy " + i));

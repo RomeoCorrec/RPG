@@ -30,7 +30,7 @@ public class BOSS extends Enemy{
     }
 
     public BOSS(String name) {
-        super(name, (int) ((Math.random() * 51) + 0));
+        super(name, (int) ((Math.random() * 51) + 250));
         Random R = new Random();
         this.PdVie = 300;
         this.armure = R.nextInt(10) + 30;
