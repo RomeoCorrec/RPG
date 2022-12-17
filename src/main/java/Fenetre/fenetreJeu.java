@@ -187,7 +187,7 @@ public class fenetreJeu {
                     HBhero.getChildren().add(new RepPersonnages(imageHunter, listeHero.get(i)));
                     break;
             }
-            listeEnnemy.add(new Enemy("enemy " + i));
+            listeEnnemy.add(new Enemy("enemy " + (i+1)));
             HBennemy.getChildren().add(new RepPersonnages(imageEnemy, listeEnnemy.get(i)));
             Random rd = new Random();
             heroActuel = rd.nextInt(listeHero.size());
@@ -262,7 +262,7 @@ public class fenetreJeu {
                 setMessage(listeHero.get(heroActuel).getName() + " attaque " + listeEnnemy.get(x).getName() + "\n" + "et lui inflige " + (pdvInit - pdvActuel) + " points de dégats");
                 Timeline task = setBarEnemy(listeEnnemy.get(x), ((RepPersonnages) HBennemy.getChildren().get(x)).getBarreDeVie());
                 task.playFromStart();
-                PauseTransition pauseTransition1 = new PauseTransition((Duration.millis(3000)));
+                PauseTransition pauseTransition1 = new PauseTransition((Duration.millis(4500)));
                 GB.setVisible(false);
                 if (listeEnnemy.get(x).getPdVie() <= 0) {
                     mortEnemy(GB, x);
@@ -322,7 +322,7 @@ public class fenetreJeu {
 
                     setMessage(listeHero.get(heroActuel-1).getName() + " affaiblit " + listeEnnemy.get(x).getName());
                     mage.sortDeGlace(mage, listeEnnemy.get(x));
-                    PauseTransition pauseTransition3 = new PauseTransition((Duration.millis(3000)));
+                    PauseTransition pauseTransition3 = new PauseTransition((Duration.millis(4500)));
                     GB.setVisible(false);
                     if (listeEnnemy.get(x).getPdVie() <= 0) {
                         mortEnemy(GB, x);
@@ -354,7 +354,7 @@ public class fenetreJeu {
                 setMessage(listeHero.get(heroActuel).getName() + " tire une flèche sur " + listeEnnemy.get(x).getName() + "\n" + " et lui inflige " + (pvInit - pvActuel) + " point de dégats");
                 Timeline task = setBarEnemy(listeEnnemy.get(x), ((RepPersonnages) HBennemy.getChildren().get(x)).getBarreDeVie());
                 task.playFromStart();
-                PauseTransition pauseTransition4 = new PauseTransition((Duration.millis(3000)));
+                PauseTransition pauseTransition4 = new PauseTransition((Duration.millis(4500)));
                 GB.setVisible(false);
                 if (listeEnnemy.get(x).getPdVie() <= 0) {
                     mortEnemy(GB, x);

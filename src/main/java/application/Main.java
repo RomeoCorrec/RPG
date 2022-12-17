@@ -26,6 +26,7 @@ public class Main extends Application {
         switch (choix) {
             case 1:
                 Game.main(new String[]{});
+                break;
             case 2:
                 try {
                     FenetrePrincipale FP = new FenetrePrincipale();
@@ -34,7 +35,9 @@ public class Main extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
             }
+
     }
 
 

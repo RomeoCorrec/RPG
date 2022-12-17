@@ -46,7 +46,7 @@ public class Mage extends SpellCaster {
     }
 
     public Mage(String name) {
-        super(name, 130, 150, "Mage", 30, 20, 10, 130);
+        super(name, 130, 1000, "Mage", 30, 20, 10, 130);
     }
 }
 

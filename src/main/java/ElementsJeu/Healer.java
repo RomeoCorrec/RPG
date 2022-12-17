@@ -31,7 +31,7 @@ public class Healer extends SpellCaster{
     public void soinDeZone(Healer heroH, ArrayList<Hero> TH) {
         System.out.println("Je soigne tout le monde !");
         for (Hero hero : TH) {
-            float degatsSoigne = ((caducee.getDegatsMagique() + heroH.getForce()) * hero.getEfficaciteSoin()) / 3;
+            int degatsSoigne = (int) ((caducee.getDegatsMagique() + heroH.getForce()) * hero.getEfficaciteSoin()) / 3;
             Random rd = new Random();
             int R = rd.nextInt(11);
             if (R > 7) {
@@ -54,7 +54,7 @@ public class Healer extends SpellCaster{
         System.out.println("Votre épée inflige maintenant " + caducee.getDegats() + " point de dégats");
     }
     public Healer(String name) {
-        super(name, 130, 150, "Healer", 10, 20, 10, 130);
+        super(name, 130, 1000, "Healer", 10, 20, 10, 130);
     }
 
 

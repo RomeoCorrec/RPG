@@ -1,5 +1,6 @@
 package ElementsJeu;
 
+import javafx.scene.control.Tab;
 import utils.ConsoleParser;
 import utils.InputParser;
 import utils.InputParser.*;
@@ -26,22 +27,32 @@ public class Game {
             InitialisationHero(TableauHero, i);
             initialisationEnemy(TableauEnemy, i);
         }
+        int initSize = TableauHero.size();
         InitialisationInventaire(TableauHero);
 
-
+        boolean VaAffronterLeBoss = false;
         for (int i = 0; i < 5; i++) {
         tourDeCombat(TableauHero, TableauEnemy);
+        for(int j = 0; j < initSize; j++) {
+            initialisationEnemy(TableauEnemy, j);
+        }
         Thread.sleep(1000);
         AmeliorationPostCombat(TableauHero);
+        if (i == 4 && TableauHero.size() != 0) {
+            VaAffronterLeBoss = true;
         }
-
-        CP.affichageTexte("Vous allez maintenant affronter le BOSS");
-        BOSS boss = new BOSS("BOSS");
-        boss.setPdVie(100*TableauHero.size());
-        ArrayList<Enemy> TB = new ArrayList<>();
-        TB.add(boss);
-        tourDeCombat(TableauHero, TB);
-        CP.affichageTexte("Vous avez vaincue le BOSS, bien jouer !!");
+        }
+        if (VaAffronterLeBoss) {
+            CP.affichageTexte("Vous allez maintenant affronter le BOSS");
+            BOSS boss = new BOSS("BOSS");
+            boss.setPdVie(100 * TableauHero.size());
+            ArrayList<Enemy> TB = new ArrayList<>();
+            TB.add(boss);
+            tourDeCombat(TableauHero, TB);
+            if(TableauHero.size() != 0) {
+                CP.affichageTexte("Vous avez vaincue le BOSS, bien jouer !!");
+            }
+        }
     }
 
     public static void InitialisationHero(ArrayList<Hero> TH, int i) {
@@ -163,8 +174,10 @@ public class Game {
                             switch (choix) {
                                 case 1:
                                     CP.affichageTexte("quel enemie voulez-vous attaquer ?");
+                                    int x = 1;
                                     for (Enemy e : TableauEnemy) {
-                                        CP.affichageTexte(e.getName());
+                                        CP.affichageTexte(x + ". " + e.getName());
+                                        x++;
                                     }
                                     int choixE = CP.recuperationInt();
                                     ((Warrior) heroActuel).coupDepee(((Warrior) heroActuel), TableauEnemy.get(choixE - 1));
@@ -198,8 +211,10 @@ public class Game {
                             switch (choix) {
                                 case 1:
                                     CP.affichageTexte("quel enemie voulez-vous attaquer ?");
+                                    int x = 1;
                                     for (Enemy e : TableauEnemy) {
-                                        CP.affichageTexte(e.getName());
+                                        CP.affichageTexte(x + ". " + e.getName());
+                                        x++;
                                     }
                                     int choixE = CP.recuperationInt();
                                     ((Hunter) heroActuel).tireAlArc(TableauEnemy.get(choixE - 1), ((Hunter) heroActuel));
@@ -240,8 +255,10 @@ public class Game {
                                     CP.affichageTexte("2. Sort de glace");
                                     int choixS = CP.recuperationInt();
                                     CP.affichageTexte("quel enemie voulez-vous attaquer ?");
+                                    int x = 1;
                                     for (Enemy e : TableauEnemy) {
-                                        CP.affichageTexte(e.getName());
+                                        CP.affichageTexte(x + ". " + e.getName());
+                                        x++;
                                     }
                                     int choixE = CP.recuperationInt();
                                     switch (choixS) {
@@ -274,7 +291,7 @@ public class Game {
 
 
                             }
-                        } else if (heroActuel.getClasse().equals("healer")) {
+                        } else if (heroActuel.getClasse().equals("Healer")) {
                             CP.affichageTexte("Que voulez vous faire " + heroActuel.getName() + " ?");
                             // Thread.sleep(1000);
                             CP.affichageTexte("1. Soigner");
