@@ -133,7 +133,7 @@ public class fenetreJeu {
         gridPane2 = new GridPane();
 
         for (int i = 0; i < 12; i++) {
-            Image image = new Image(this.getClass().getResourceAsStream("com/example/application/images/herbe.jpg"));
+            Image image = new Image(getClass().getResourceAsStream("/images/herbe.jpg"));
             ImageView backGroundImage1 = new ImageView(image);
             ImageView backGroundImage2 = new ImageView(image);
             GridPane.setConstraints(backGroundImage1, i % 3, i / 3);
@@ -775,7 +775,7 @@ public class fenetreJeu {
     }
 
     private void rebootCombat(int b, grilleBouton GB) {
-        if (nbrCombat < 2) {
+        if (nbrCombat < 5) {
             GB.getChildren().clear();
             for (int i = 0; i < nbrHeroInit; i++) {
                 listeEnnemy.add(new Enemy("enemy " + i));
